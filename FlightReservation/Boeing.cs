@@ -8,7 +8,7 @@ namespace FlightReservation
         public void PrintSeats()
         {
             DrawPlaneFront(8);
-            DrawSeatRows(50);
+            DrawSeatRows(40);
         }
 
 
