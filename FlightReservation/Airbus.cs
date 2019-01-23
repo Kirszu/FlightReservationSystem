@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace FlightReservation
 {
@@ -8,15 +9,15 @@ namespace FlightReservation
         public Airbus()
         {
         }
-
         public int Capacity => 255;
-
         public float FuelConsumption => 32;
+
+        public Dictionary<int, List<string>> TakenSeats = new Dictionary<int, List<string>>();
 
         public void PrintSeats()
         {
             DrawPlaneFront(6);
-            DrawSeatRows(50);
+            DrawSeatRows(50, this.TakenSeats);
         }
 
 
@@ -43,11 +44,30 @@ namespace FlightReservation
             }
             return temp;
         }
-        private void DrawSeatRows(int rows)
+        private void DrawSeatRows(int rows, Dictionary<int, List<string>> takenSeats)
         {
+            string a;
+            string b;
             for (int i = 1; i <= rows; i++)
             {
-                Console.WriteLine("      | [A]    [B] | {0}", i);
+                a = "A";
+                b = "B";
+                if (takenSeats.ContainsKey(i))
+                {
+                    foreach (var seat in takenSeats[i])
+                    {
+                        switch (seat)
+                        {
+                            case "A":
+                                a = "X";
+                                break;
+                            case "B":
+                                b = "X";
+                                break;
+                        }
+                    }
+                }
+                Console.WriteLine($"      | [{a}]    [{b}] | {i}");
             }
         }
     }

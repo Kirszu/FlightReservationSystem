@@ -9,5 +9,6 @@ namespace FlightReservation
         int Capacity { get; }
         float FuelConsumption { get; }
         void PrintSeats();
+
     }
 }

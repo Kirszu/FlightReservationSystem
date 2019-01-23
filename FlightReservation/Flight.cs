@@ -10,6 +10,7 @@ namespace FlightReservation
         private string from;
         private string destination;
         public string flightId;
+        public IPlane plane;
 
         public Flight(string from, string destination, DateTime departure, DateTime arrival, float distance, IPlane plane)
         {
@@ -18,6 +19,7 @@ namespace FlightReservation
             this.distance = distance;
             this.from = from;
             this.destination = destination;
+            this.plane = plane;
             this.flightId = $"{from}:{destination}-{departure.ToString("ddMMyyyyHHmmss")}";
         }
     }

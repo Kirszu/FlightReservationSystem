@@ -1,14 +1,19 @@
 ﻿using System;
+using System.Collections.Generic;
 namespace FlightReservation
 {
     public class Boeing : IPlane
     {
         public int Capacity => 200;
         public float FuelConsumption => 20;
+
+        public Dictionary<int, List<string>> TakenSeats = new Dictionary<int, List<string>>();
+
+
         public void PrintSeats()
         {
             DrawPlaneFront(8);
-            DrawSeatRows(50);
+            DrawSeatRows(50, this.TakenSeats);
         }
 
 
@@ -35,11 +40,40 @@ namespace FlightReservation
             }
             return temp;
         }
-        private void DrawSeatRows(int rows)
+        private void DrawSeatRows(int rows, Dictionary<int, List<string>> takenSeats)
         {
+            string a;
+            string b;
+            string c;
+            string d;
             for (int i = 1; i <= rows; i++)
             {
-                Console.WriteLine("        | [A][B]  [C][D] | {0}", i);
+                a = "A";
+                b = "B";
+                c = "C";
+                d = "D";
+                if (takenSeats.ContainsKey(i))
+                {
+                    foreach (var seat in takenSeats[i])
+                    {
+                        switch (seat)
+                        {
+                            case "A":
+                                a = "X";
+                                break;
+                            case "B":
+                                b = "X";
+                                break;
+                            case "C":
+                                c = "X";
+                                break;
+                            case "D":
+                                d = "X";
+                                break;
+                        }
+                    }
+                }
+                Console.WriteLine($"        | [{a}][{b}]  [{c}][{d}] | {i}");
             }
         }
     }
