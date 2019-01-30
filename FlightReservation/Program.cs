@@ -7,6 +7,12 @@ namespace FlightReservation
     {
         static void Main(string[] args)
         {
+            CustomerList customerList = new CustomerList();
+            Console.WriteLine("Add new customer");
+            Customer customer = new Customer(Console.ReadLine());
+            customerList.AddCustomer(customer.Name);
+
+
             FlightKeeper fk = new FlightKeeper();
             DateTime departure = new DateTime(2019, 6, 1, 7, 47, 0);
             DateTime arrival = new DateTime(2019, 6, 1, 12, 4, 0);
@@ -30,7 +36,11 @@ namespace FlightReservation
             flight = new Flight("WAW", "GDA", departure, arrival, 412.5f, plane2);
             fk.Add(flight);
             Console.WriteLine(fk.ToString());
+
+            Console.WriteLine($"Hi {customer.Name}!");
             Console.WriteLine("Choose your flight");
+
+
             string choosenFlight = Console.ReadLine();
             foreach (var fly in fk.flightList)
             {
@@ -38,6 +48,21 @@ namespace FlightReservation
                 {
                     fly.plane.PrintSeats();
                 }
+            }
+            Console.WriteLine("Choose your seat (seats marked with 'X' are taken");
+            customer.BookFlight(flight);
+            plane2.TakenSeats.Add(9, new List<string>());
+            plane2.TakenSeats[9].Add("A");
+            foreach (var fly in fk.flightList)
+            {
+                if (fly.flightId == choosenFlight)
+                {
+                    fly.plane.PrintSeats();
+                }
+            }
+            foreach (var item in customer.BookedFlights)
+            {
+                Console.WriteLine(item.flightId);
             }
             Console.ReadLine();
         }
