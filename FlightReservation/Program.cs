@@ -13,12 +13,11 @@ namespace FlightReservation
             customerList.AddCustomer(customer.Name);
 
 
-            FlightKeeper fk = new FlightKeeper();
             DateTime departure = new DateTime(2019, 6, 1, 7, 47, 0);
             DateTime arrival = new DateTime(2019, 6, 1, 12, 4, 0);
             Boeing plane = new Boeing();
             Flight flight = new Flight("WAW", "LIS", departure, arrival, 902.2f, plane);
-            fk.Add(flight);
+            FlightKeeper.Add(flight);
             departure = new DateTime(2019, 7, 1, 12, 42, 22);
             arrival = new DateTime(2019, 7, 1, 15, 14, 21);
             plane = new Boeing();
@@ -26,7 +25,7 @@ namespace FlightReservation
             plane.TakenSeats[1].Add("A");
             plane.TakenSeats[1].Add("C");
             flight = new Flight("WAW", "LON", departure, arrival, 732.5f, plane);
-            fk.Add(flight);
+            FlightKeeper.Add(flight);
             departure = new DateTime(2019, 7, 1, 08, 22, 22);
             arrival = new DateTime(2019, 7, 1, 09, 15, 13);
             Airbus plane2 = new Airbus();
@@ -34,15 +33,15 @@ namespace FlightReservation
             plane2.TakenSeats[10].Add("A");
             plane2.TakenSeats[10].Add("B");
             flight = new Flight("WAW", "GDA", departure, arrival, 412.5f, plane2);
-            fk.Add(flight);
-            Console.WriteLine(fk.ToString());
+            FlightKeeper.Add(flight);
+            Console.WriteLine(FlightKeeper.ToString());
 
             Console.WriteLine($"Hi {customer.Name}!");
             Console.WriteLine("Choose your flight");
 
 
             string choosenFlight = Console.ReadLine();
-            foreach (var fly in fk.flightList)
+            foreach (var fly in FlightKeeper.flightList)
             {
                 if (fly.flightId == choosenFlight)
                 {
@@ -53,7 +52,7 @@ namespace FlightReservation
             customer.BookFlight(flight);
             plane2.TakenSeats.Add(9, new List<string>());
             plane2.TakenSeats[9].Add("A");
-            foreach (var fly in fk.flightList)
+            foreach (var fly in FlightKeeper.flightList)
             {
                 if (fly.flightId == choosenFlight)
                 {

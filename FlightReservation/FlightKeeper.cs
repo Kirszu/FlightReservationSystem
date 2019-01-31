@@ -3,20 +3,17 @@ using System.Collections.Generic;
 
 namespace FlightReservation
 {
-    public class FlightKeeper
+    public static class FlightKeeper
     {
-        public FlightKeeper()
-        {
-        }
 
-        public List<Flight> flightList = new List<Flight>();
+        public static List<Flight> flightList = new List<Flight>();
 
-        internal void Add(Flight flight)
+        internal static void Add(Flight flight)
         {
             flightList.Add(flight);
         }
 
-        internal void Delete(string flightId)
+        internal static void Delete(string flightId)
         {
             foreach (var flight in flightList)
             {
@@ -27,7 +24,7 @@ namespace FlightReservation
                 }
             }
         }
-        public override string ToString()
+        public static new string ToString()
         {
             string result = "";
             foreach (var flight in flightList)
