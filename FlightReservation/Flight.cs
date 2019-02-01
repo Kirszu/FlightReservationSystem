@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace FlightReservation
 {
@@ -11,6 +12,7 @@ namespace FlightReservation
         private string destination;
         public string flightId;
         public IPlane plane;
+        public List<string> bookedSeats = new List<string>();
 
         public Flight(string from, string destination, DateTime departure, DateTime arrival, float distance, IPlane plane)
         {
