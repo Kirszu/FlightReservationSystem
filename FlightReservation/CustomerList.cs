@@ -3,11 +3,11 @@ namespace FlightReservation
 {
     public static class CustomerList
     {
-        public static List<string> customerList = new List<string>();
+        public static List<Customer> customerList = new List<Customer>();
 
-        public static void AddCustomer(string name)
+        public static void AddCustomer(Customer customer)
         {
-            customerList.Add(name);
+            customerList.Add(customer);
         }
     }
 }

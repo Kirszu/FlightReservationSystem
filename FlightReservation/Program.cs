@@ -7,31 +7,33 @@ namespace FlightReservation
     {
         static void Main(string[] args)
         {
-            CustomerList.AddCustomer("Scott");
+            CustomerList.AddCustomer(new Customer("Scott"));
+            CustomerList.AddCustomer(new Customer("Anna"));
             ConsoleUI.PrintStartMenu();
             int input = ConsoleUI.AskForInteger();
             bool askAgain = true;
+            string customerName = "";
+            Customer customer = new Customer("");
             do
-                switch (input)
-                {
-                    case 1:
-                        Console.WriteLine("Choose customer name");
-                        string customerName = ConsoleUI.AskForNewCustomerName();
-                        Console.WriteLine($"Hi {customerName}!");
-                        askAgain = false;
-                        break;
-                    case 2:
-                        Console.WriteLine("Case 2");
-                        askAgain = false;
-                        break;
-                    default:
-                        Console.WriteLine("Incorrect choice");
-                        input = ConsoleUI.AskForInteger();
-                        break;
-                } while (askAgain);
-
-
-            Customer customer = new Customer(Console.ReadLine());
+            switch (input)
+            {
+                case 1:
+                    customerName = ConsoleUI.AskForNewCustomerName();
+                    customer = new Customer(customerName);
+                    CustomerList.AddCustomer(customer);
+                    askAgain = false;
+                    break;
+                case 2:
+                    customerName = ConsoleUI.AskForExistingCustomerName();
+                    customer = CustomerList.customerList.Find(cust => cust.Name == customerName);
+                    askAgain = false;
+                    break;
+                default:
+                    Console.WriteLine("Incorrect choice");
+                    input = ConsoleUI.AskForInteger();
+                    break;
+            } while (askAgain);
+            Console.WriteLine($"Hi {customer.Name}!");
 
 
             DateTime departure = new DateTime(2019, 6, 1, 7, 47, 0);
@@ -56,9 +58,7 @@ namespace FlightReservation
             FlightKeeper.Add(flight);
             Console.WriteLine(FlightKeeper.ToString());
 
-            Console.WriteLine($"Hi {customer.Name}!");
             Console.WriteLine("Choose your flight");
-
 
             string choosenFlight = Console.ReadLine();
             foreach (var fly in FlightKeeper.flightList)
