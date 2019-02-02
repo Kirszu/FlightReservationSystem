@@ -56,18 +56,14 @@ namespace FlightReservation
             plane2.TakenSeats[9].Add("A");
             flight = new Flight("WAW", "GDA", departure, arrival, 412.5f, plane2);
             FlightKeeper.Add(flight);
-            Console.WriteLine(FlightKeeper.ToString());
 
+            Console.WriteLine(FlightKeeper.ToString());       
             Console.WriteLine("Choose your flight");
 
-            string choosenFlight = Console.ReadLine();
-            foreach (var fly in FlightKeeper.flightList)
-            {
-                if (fly.flightId == choosenFlight)
-                {
-                    fly.plane.PrintSeats();
-                }
-            }
+            string choosenFlight = ConsoleUI.AskForExistingFlight();
+            flight = FlightKeeper.flightList.Find(fly => fly.flightId == choosenFlight);
+            flight.plane.PrintSeats();
+
             Console.WriteLine("Choose your seat (seats marked with 'X' are taken");
             string seatId = Console.ReadLine();
             string seatLetter = seatId.Substring(0, 1).ToUpper();

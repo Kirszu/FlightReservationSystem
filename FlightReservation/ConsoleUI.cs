@@ -77,5 +77,28 @@ namespace FlightReservation
                 input = Console.ReadLine();
             } while (true);
         }
+
+        public static string AskForExistingFlight()
+        {
+            Console.WriteLine("Choose existing flight:");
+            string input = Console.ReadLine();
+            do
+            {
+                while (Validator.CheckIfEmptyString(input) || Validator.CheckIfNumeric(input))
+                {
+                    Console.WriteLine("Flight name cannot be empty or be numeric");
+                    input = Console.ReadLine();
+                }
+                foreach (Flight flight in FlightKeeper.flightList)
+                {
+                    if (flight.flightId == input)
+                    {
+                        return input;
+                    }
+                }
+                Console.WriteLine("Provided flight ID doesn't exist in the database");
+                input = Console.ReadLine();
+            } while (true);
+        }
     }
 }
