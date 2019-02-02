@@ -6,10 +6,9 @@ namespace FlightReservation
     {
         public int Capacity => 200;
         public float FuelConsumption => 20;
-
+        public List<string> SeatNames => new List<string>(new string[] { "A", "B", "C", "D" });
         public Dictionary<int, List<string>> TakenSeats = new Dictionary<int, List<string>>();
-
-
+        
         public void PrintSeats()
         {
             DrawPlaneFront(8);
@@ -76,5 +75,7 @@ namespace FlightReservation
                 Console.WriteLine($"        | [{a}][{b}]  [{c}][{d}] | {i}");
             }
         }
+
+
     }
 }

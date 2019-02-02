@@ -11,7 +11,7 @@ namespace FlightReservation
         }
         public int Capacity => 255;
         public float FuelConsumption => 32;
-
+        public List<string> SeatNames => new List<string>(new string[] { "A", "B"});
         public Dictionary<int, List<string>> TakenSeats = new Dictionary<int, List<string>>();
 
         public void PrintSeats()

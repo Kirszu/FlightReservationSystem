@@ -64,16 +64,15 @@ namespace FlightReservation
             flight = FlightKeeper.flightList.Find(fly => fly.flightId == choosenFlight);
             flight.plane.PrintSeats();
 
-            Console.WriteLine("Choose your seat (seats marked with 'X' are taken");
-            string seatId = Console.ReadLine();
+            string seatId = ConsoleUI.AskForSeatNumber(flight);
             string seatLetter = seatId.Substring(0, 1).ToUpper();
             int seatRow = int.Parse(seatId.Substring(1, seatId.Length - 1));
 
             customer.BookFlight(flight);
-            if (!plane2.TakenSeats.ContainsKey(seatRow)){
-                plane2.TakenSeats.Add(seatRow, new List<string>()); //Check if key is in dictionary
+            if (!flight.plane.TakenSeats.ContainsKey(seatRow)){
+                flight.plane.TakenSeats.Add(seatRow, new List<string>()); //Check if key is in dictionary
             }
-            plane2.TakenSeats[seatRow].Add(seatLetter);
+            flight.plane.TakenSeats[seatRow].Add(seatLetter);
             foreach (var fly in FlightKeeper.flightList)
             {
                 if (fly.flightId == choosenFlight)

@@ -100,5 +100,28 @@ namespace FlightReservation
                 input = Console.ReadLine();
             } while (true);
         }
+
+        public static string AskForSeatNumber(Flight flight)
+        {
+            Console.WriteLine("Choose your seat number (for example: A10)");
+            Console.WriteLine("Seats marked with 'X' are taken");
+            string input = Console.ReadLine();
+            do
+            {
+                while (Validator.CheckIfEmptyString(input) || Validator.CheckIfNumeric(input))
+                {
+                    Console.WriteLine("Flight name cannot be empty or be all numeric");
+                    input = Console.ReadLine();
+                }
+                if (input.Length > 1 &&
+                    flight.plane.SeatNames.Contains(input.Substring(0, 1).ToUpper()) &&
+                    Validator.CheckIfNumeric(input.Substring(1, input.Length - 1)))
+                {
+                    return input;
+                }
+                Console.WriteLine("Wrong format");
+                input = Console.ReadLine();
+            } while (true);
+        }
     }
 }
