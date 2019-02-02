@@ -8,7 +8,30 @@ namespace FlightReservation
         static void Main(string[] args)
         {
             CustomerList customerList = new CustomerList();
-            Console.WriteLine("Add new customer");
+
+            ConsoleUI.PrintStartMenu();
+            int input = ConsoleUI.AskForInteger();
+            bool askAgain = true;
+            do
+                switch (input)
+                {
+                    case 1:
+                        Console.WriteLine("Choose customer name");
+                        string customerName = ConsoleUI.AskForCustomerName();
+                        Console.WriteLine($"Hi {customerName}!");
+                        askAgain = false;
+                        break;
+                    case 2:
+                        Console.WriteLine("Case 2");
+                        askAgain = false;
+                        break;
+                    default:
+                        Console.WriteLine("Incorrect choice");
+                        input = ConsoleUI.AskForInteger();
+                        break;
+                } while (askAgain);
+
+
             Customer customer = new Customer(Console.ReadLine());
             customerList.AddCustomer(customer.Name);
 
