@@ -7,8 +7,7 @@ namespace FlightReservation
     {
         static void Main(string[] args)
         {
-            CustomerList customerList = new CustomerList();
-
+            CustomerList.AddCustomer("Scott");
             ConsoleUI.PrintStartMenu();
             int input = ConsoleUI.AskForInteger();
             bool askAgain = true;
@@ -17,7 +16,7 @@ namespace FlightReservation
                 {
                     case 1:
                         Console.WriteLine("Choose customer name");
-                        string customerName = ConsoleUI.AskForCustomerName();
+                        string customerName = ConsoleUI.AskForNewCustomerName();
                         Console.WriteLine($"Hi {customerName}!");
                         askAgain = false;
                         break;
@@ -33,7 +32,6 @@ namespace FlightReservation
 
 
             Customer customer = new Customer(Console.ReadLine());
-            customerList.AddCustomer(customer.Name);
 
 
             DateTime departure = new DateTime(2019, 6, 1, 7, 47, 0);

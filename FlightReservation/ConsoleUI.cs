@@ -22,14 +22,28 @@ namespace FlightReservation
             return int.Parse(input);
         }
 
-        public static string AskForCustomerName()
+        public static string AskForNewCustomerName()
         {
             string input = Console.ReadLine();
-            while (Validator.CheckInputIfEmptyString(input) || Validator.CheckInputIfNumeric(input))
+            bool askAgain = true;
+            do
             {
-                Console.WriteLine("Customer name cannot be empty or be numeric");
-                input = Console.ReadLine();
-            }
+                while (Validator.CheckInputIfEmptyString(input) || Validator.CheckInputIfNumeric(input))
+                {
+                    Console.WriteLine("Customer name cannot be empty or be numeric");
+                    input = Console.ReadLine();
+                }
+
+                if (CustomerList.customerList.Contains(input))
+                {
+                    Console.WriteLine("Customer name is already in database. Choose another one");
+                    input = Console.ReadLine();
+                } 
+                else
+                {
+                    askAgain = false;
+                }
+            } while (askAgain);
             return input;
         }
     }
