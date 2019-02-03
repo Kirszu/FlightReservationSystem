@@ -7,35 +7,6 @@ namespace FlightReservation
     {
         static void Main(string[] args)
         {
-            CustomerList.AddCustomer(new Customer("Scott"));
-            CustomerList.AddCustomer(new Customer("Anna"));
-            ConsoleUI.PrintStartMenu();
-            int input = ConsoleUI.AskForInteger();
-            bool askAgain = true;
-            string customerName = "";
-            Customer customer = new Customer("");
-            do
-            switch (input)
-            {
-                case 1:
-                    customerName = ConsoleUI.AskForNewCustomerName();
-                    customer = new Customer(customerName);
-                    CustomerList.AddCustomer(customer);
-                    askAgain = false;
-                    break;
-                case 2:
-                    customerName = ConsoleUI.AskForExistingCustomerName();
-                    customer = CustomerList.customerList.Find(cust => cust.Name == customerName);
-                    askAgain = false;
-                    break;
-                default:
-                    Console.WriteLine("Incorrect choice");
-                    input = ConsoleUI.AskForInteger();
-                    break;
-            } while (askAgain);
-            Console.WriteLine($"Hi {customer.Name}!");
-
-
             DateTime departure = new DateTime(2019, 6, 1, 7, 47, 0);
             DateTime arrival = new DateTime(2019, 6, 1, 12, 4, 0);
             IPlane plane = new Boeing();
@@ -56,44 +27,61 @@ namespace FlightReservation
             flight = new Flight("WAW", "GDA", departure, arrival, 412.5f, plane2);
             FlightKeeper.Add(flight);
 
-            Console.WriteLine(FlightKeeper.ToString());       
-            Console.WriteLine("Choose your flight");
+            CustomerList.AddCustomer(new Customer("Scott"));
+            CustomerList.AddCustomer(new Customer("Anna"));
 
-            string choosenFlight = ConsoleUI.AskForExistingFlight();
-            flight = FlightKeeper.flightList.Find(fly => fly.flightId == choosenFlight);
-            flight.plane.PrintSeats();
-
-            string seatId = ConsoleUI.AskForSeatNumber(flight);
-            int seatRow = int.Parse(seatId.Substring(1, seatId.Length - 1));
-
-            flight.plane.AddTakenSeat(seatId);
-            customer.BookFlight(flight);
-            
-            foreach (var fly in FlightKeeper.flightList)
+            string customerName = "";
+            Customer customer = new Customer("");
+            while (true)
             {
-                if (fly.flightId == choosenFlight)
+                ConsoleUI.PrintStartMenu();
+                int input = ConsoleUI.AskForInteger();
+                bool askAgain = true;
+                do
+                    switch (input)
+                    {
+                        case 1:
+                            customerName = ConsoleUI.AskForNewCustomerName();
+                            customer = new Customer(customerName);
+                            CustomerList.AddCustomer(customer);
+                            askAgain = false;
+                            break;
+                        case 2:
+                            customerName = ConsoleUI.AskForExistingCustomerName();
+                            customer = CustomerList.customerList.Find(cust => cust.Name == customerName);
+                            askAgain = false;
+                            break;
+                        default:
+                            Console.WriteLine("Incorrect choice");
+                            input = ConsoleUI.AskForInteger();
+                            break;
+                    } while (askAgain);
+                Console.WriteLine($"Hi {customer.Name}!");
+
+                Console.WriteLine(FlightKeeper.ToString());
+                Console.WriteLine("Choose your flight");
+
+                string choosenFlight = ConsoleUI.AskForExistingFlight();
+                flight = FlightKeeper.flightList.Find(fly => fly.flightId == choosenFlight);
+                flight.plane.PrintSeats();
+
+                string seatId = ConsoleUI.AskForSeatNumber(flight);
+                flight.plane.AddTakenSeat(seatId);
+                customer.BookFlight(flight, seatId);
+                flight.plane.PrintSeats();
+
+                Console.WriteLine($"Customer name: {customer.Name}");
+                foreach (var item in customer.BookedFlights)
                 {
-                    fly.plane.PrintSeats();
+                    Console.WriteLine(item.Key.flightId);
+                    foreach (var temp in item.Value)
+                    {
+                        Console.WriteLine(temp);
+                    }
                 }
-            }
-
-            foreach (var bookedFlight in customer.BookedFlights)
-            {
-                if (bookedFlight.flightId == flight.flightId) {
-                    bookedFlight.bookedSeats.Add(seatId);   //Adding seat number to customers booked ticket
-                }
-            }
-
-            foreach (var item in customer.BookedFlights)
-            {
-                Console.WriteLine(item.flightId);
-                foreach (var bookedSeat in item.bookedSeats)  //Printing seat number of customers booked ticket
-                {
-                    Console.WriteLine(bookedSeat);
-                }
-            }
-
-            Console.ReadLine();
+                Console.WriteLine("Next turn");
+                Console.ReadLine();
+            } 
         }
     }
 }
