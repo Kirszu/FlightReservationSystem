@@ -40,5 +40,26 @@ namespace FlightReservation
         {
             return test == "" ? true : false;
         }
+
+        internal static bool CheckIfSeatAlreadyTaken(string input, Flight flight)
+        {
+            int seatRow = int.Parse(input.Substring(1, input.Length - 1));
+            string seatLetter = input.Substring(0, 1);
+            if (!flight.plane.TakenSeats().ContainsKey(seatRow))
+            {
+                return false;
+            } 
+            else
+            {
+                if (flight.plane.TakenSeats()[seatRow].Contains(seatLetter))
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+        }
     }
 }

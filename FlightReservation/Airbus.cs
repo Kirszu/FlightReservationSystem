@@ -20,6 +20,22 @@ namespace FlightReservation
             DrawSeatRows(50, this.TakenSeats);
         }
 
+        Dictionary<int, List<string>> IPlane.TakenSeats()
+        {
+            return this.TakenSeats;
+        }
+
+        public void AddTakenSeat(string seat)
+        {
+            int seatRow = int.Parse(seat.Substring(1, seat.Length - 1));
+            string seatLetter = seat.Substring(0, 1).ToUpper();
+            if (!this.TakenSeats.ContainsKey(seatRow))
+            {
+                this.TakenSeats.Add(seatRow, new List<string>());
+            }
+            this.TakenSeats[seatRow].Add(seatLetter);
+        }
+
 
         private void DrawPlaneFront(int frontLength)
         {

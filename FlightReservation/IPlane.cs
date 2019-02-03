@@ -10,5 +10,7 @@ namespace FlightReservation
         float FuelConsumption { get; }
         List<string> SeatNames { get; }
         void PrintSeats();
+        Dictionary<int, List<string>> TakenSeats();
+        void AddTakenSeat(string seat);
     }
 }

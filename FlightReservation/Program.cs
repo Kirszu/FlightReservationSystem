@@ -38,22 +38,21 @@ namespace FlightReservation
 
             DateTime departure = new DateTime(2019, 6, 1, 7, 47, 0);
             DateTime arrival = new DateTime(2019, 6, 1, 12, 4, 0);
-            Boeing plane = new Boeing();
+            IPlane plane = new Boeing();
             Flight flight = new Flight("WAW", "LIS", departure, arrival, 902.2f, plane);
             FlightKeeper.Add(flight);
             departure = new DateTime(2019, 7, 1, 12, 42, 22);
             arrival = new DateTime(2019, 7, 1, 15, 14, 21);
             plane = new Boeing();
-            plane.TakenSeats.Add(1, new List<string>());
-            plane.TakenSeats[1].Add("A");
-            plane.TakenSeats[1].Add("C");
+            plane.AddTakenSeat("A9");
+            plane.AddTakenSeat("B10");
             flight = new Flight("WAW", "LON", departure, arrival, 732.5f, plane);
             FlightKeeper.Add(flight);
             departure = new DateTime(2019, 7, 1, 08, 22, 22);
             arrival = new DateTime(2019, 7, 1, 09, 15, 13);
-            Airbus plane2 = new Airbus();
-            plane2.TakenSeats.Add(9, new List<string>());
-            plane2.TakenSeats[9].Add("A");
+            IPlane plane2 = new Airbus();
+            plane2.AddTakenSeat("A9");
+            plane2.AddTakenSeat("B9");
             flight = new Flight("WAW", "GDA", departure, arrival, 412.5f, plane2);
             FlightKeeper.Add(flight);
 
@@ -65,14 +64,11 @@ namespace FlightReservation
             flight.plane.PrintSeats();
 
             string seatId = ConsoleUI.AskForSeatNumber(flight);
-            string seatLetter = seatId.Substring(0, 1).ToUpper();
             int seatRow = int.Parse(seatId.Substring(1, seatId.Length - 1));
 
+            flight.plane.AddTakenSeat(seatId);
             customer.BookFlight(flight);
-            if (!flight.plane.TakenSeats.ContainsKey(seatRow)){
-                flight.plane.TakenSeats.Add(seatRow, new List<string>()); //Check if key is in dictionary
-            }
-            flight.plane.TakenSeats[seatRow].Add(seatLetter);
+            
             foreach (var fly in FlightKeeper.flightList)
             {
                 if (fly.flightId == choosenFlight)
@@ -80,12 +76,14 @@ namespace FlightReservation
                     fly.plane.PrintSeats();
                 }
             }
+
             foreach (var bookedFlight in customer.BookedFlights)
             {
                 if (bookedFlight.flightId == flight.flightId) {
                     bookedFlight.bookedSeats.Add(seatId);   //Adding seat number to customers booked ticket
                 }
             }
+
             foreach (var item in customer.BookedFlights)
             {
                 Console.WriteLine(item.flightId);
@@ -94,6 +92,7 @@ namespace FlightReservation
                     Console.WriteLine(bookedSeat);
                 }
             }
+
             Console.ReadLine();
         }
     }

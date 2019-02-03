@@ -105,22 +105,35 @@ namespace FlightReservation
         {
             Console.WriteLine("Choose your seat number (for example: A10)");
             Console.WriteLine("Seats marked with 'X' are taken");
-            string input = Console.ReadLine();
+            string input = Console.ReadLine().ToUpper();
             do
             {
                 while (Validator.CheckIfEmptyString(input) || Validator.CheckIfNumeric(input))
                 {
                     Console.WriteLine("Flight name cannot be empty or be all numeric");
-                    input = Console.ReadLine();
+                    input = Console.ReadLine().ToUpper();
                 }
                 if (input.Length > 1 &&
-                    flight.plane.SeatNames.Contains(input.Substring(0, 1).ToUpper()) &&
+                    flight.plane.SeatNames.Contains(input.Substring(0, 1)) &&
                     Validator.CheckIfNumeric(input.Substring(1, input.Length - 1)))
                 {
-                    return input;
+                    if (Validator.CheckIfSeatAlreadyTaken(input, flight))
+                    {
+                        Console.WriteLine($"Seat {input} is already taken");
+                        input = Console.ReadLine().ToUpper();
+                    }
+                    else
+                    {
+                        return input;
+                    }
+                    
                 }
-                Console.WriteLine("Wrong format");
-                input = Console.ReadLine();
+                else
+                {
+                    Console.WriteLine("Wrong format");
+                    input = Console.ReadLine().ToUpper();
+                }
+               
             } while (true);
         }
     }
