@@ -56,29 +56,49 @@ namespace FlightReservation
                             input = ConsoleUI.AskForInteger();
                             break;
                     } while (askAgain);
+
                 Console.WriteLine($"Hi {customer.Name}!");
-
-                Console.WriteLine(FlightKeeper.ToString());
-                Console.WriteLine("Choose your flight");
-
-                string choosenFlight = ConsoleUI.AskForExistingFlight();
-                flight = FlightKeeper.flightList.Find(fly => fly.flightId == choosenFlight);
-                flight.plane.PrintSeats();
-
-                string seatId = ConsoleUI.AskForSeatNumber(flight);
-                flight.plane.AddTakenSeat(seatId);
-                customer.BookFlight(flight, seatId);
-                flight.plane.PrintSeats();
-
-                Console.WriteLine($"Customer name: {customer.Name}");
-                foreach (var item in customer.BookedFlights)
-                {
-                    Console.WriteLine(item.Key.flightId);
-                    foreach (var temp in item.Value)
+                ConsoleUI.PrintMainMenu();
+                input = ConsoleUI.AskForInteger();
+                askAgain = true;
+                do
+                    switch (input)
                     {
-                        Console.WriteLine(temp);
-                    }
-                }
+                        case 1:
+                            Console.WriteLine(FlightKeeper.ToString());
+                            Console.WriteLine("Choose your flight");
+                            string choosenFlight = ConsoleUI.AskForExistingFlight();
+                            flight = FlightKeeper.flightList.Find(fly => fly.flightId == choosenFlight);
+                            flight.plane.PrintSeats();
+
+                            string seatId = ConsoleUI.AskForSeatNumber(flight);
+                            flight.plane.AddTakenSeat(seatId);
+                            customer.BookFlight(flight, seatId);
+                            flight.plane.PrintSeats();
+                            ConsoleUI.PrintMainMenu();
+                            input = ConsoleUI.AskForInteger();
+                            break;
+                        case 2:
+                            foreach (var item in customer.BookedFlights)
+                            {
+                                Console.WriteLine(item.Key.flightId);
+                                foreach (var temp in item.Value)
+                                {
+                                    Console.WriteLine(temp);
+                                }
+                            }
+                            ConsoleUI.PrintMainMenu();
+                            input = ConsoleUI.AskForInteger();
+                            break;
+                        case 3:
+                            askAgain = false;
+                            break;
+                        default:
+                            Console.WriteLine("Incorrect choice");
+                            input = ConsoleUI.AskForInteger();
+                            break;
+                    } while (askAgain);
+
                 Console.WriteLine("Next turn");
                 Console.ReadLine();
             } 

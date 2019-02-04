@@ -4,11 +4,19 @@ namespace FlightReservation
 {
     public static class ConsoleUI
     {
-        public static void PrintStartMenu()
+        internal static void PrintStartMenu()
         {
             Console.WriteLine("Hello! Choose your action:");
             Console.WriteLine("1. Add new customer");
             Console.WriteLine("2. Choose existing customer");
+        }
+
+        internal static void PrintMainMenu()
+        {
+            Console.WriteLine("What you want to do?");
+            Console.WriteLine("1. Book new flight.");
+            Console.WriteLine("2. Print already booked flights.");
+            Console.WriteLine("3. Exit.");
         }
 
         public static int AskForInteger()
